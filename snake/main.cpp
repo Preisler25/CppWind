@@ -14,16 +14,22 @@
 // function `resourcePath()` from ResourcePath.hpp
 //
 
+
+#include<iostream>
+#include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-
-// Here is a small helper for you! Have a look.
 #include "ResourcePath.hpp"
+
+
+using namespace sf;
 
 int main(int, char const**)
 {
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+    window.setFramerateLimit(120);
+    
 
     // Set the Icon
     sf::Image icon;
@@ -44,7 +50,7 @@ int main(int, char const**)
     if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
         return EXIT_FAILURE;
     }
-    sf::Text text("Hello SFML", font, 50);
+    sf::Text text("Hello SFML", font, 100);
     text.setFillColor(sf::Color::Black);
 
     // Load a music to play
@@ -56,9 +62,16 @@ int main(int, char const**)
     // Play the music
     music.play();
 
+    float dt;
+    Clock dt_clock;
+    
+    
     // Start the game loop
     while (window.isOpen())
     {
+        
+        dt = dt_clock.restart().asSeconds();
+        
         // Process events
         sf::Event event;
         while (window.pollEvent(event))
